@@ -25,13 +25,12 @@ class MyFavoriteBooks extends React.Component {
     })
   }
 
-  addBook = async (e) =>{
-    e.preventDefault()
-    let bookInfo = {
-      title : e.target.title.value
-    }
-    console.log(bookInfo)
-    let temBook = await axios.post(`${process.env.REACT_APP_API_LINK}/addBook`,bookInfo);
+  addBook = async (bookInfo) =>{
+    let temBook = await axios.post(`${process.env.REACT_APP_API_LINK}/addBook`,bookInfo).then(re => {
+      console.log(re)
+    }).catch(error => {
+      console.log(error)
+    })
     this.setState ({
       data: temBook.data
     })
@@ -59,7 +58,7 @@ class MyFavoriteBooks extends React.Component {
           {
             this.state.data.map((ele, idx) => {
               return (
-                <Card>
+                <Card key={idx}>
                   <Card.Body>
                     <Card.Title>{ele.title}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{ele.status}</Card.Subtitle>
