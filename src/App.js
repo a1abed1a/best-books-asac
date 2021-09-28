@@ -26,7 +26,7 @@ class App extends React.Component {
               {isAuthenticated ? <BestBooks /> : <Login />}
             </Route>
             <Route exact path="/profile">
-              <Profile />
+              <Profile/>
             </Route>
           </Switch>
           <Footer />
