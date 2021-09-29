@@ -6,10 +6,10 @@ class Profile extends Component {
     
     const { user, isAuthenticated } = this.props.auth0;
     return isAuthenticated && (
-      <>
+      <div style={{margin:'10px'}}>
     <div>Hello {user.name}</div>
     <div>{user.email}</div>
-    </>
+    </div>
     )
   }
 }

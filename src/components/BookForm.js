@@ -38,7 +38,7 @@ class BookForm extends React.Component {
         return (
             <div>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button variant="outline-dark" onClick={this.showM}>Add a book</Button>
+                    <Button variant="outline-dark" onClick={this.showM}  style={{marginBottom:'10px'}}>Add a book</Button>
                 </div>
                 <Modal show={this.state.show} onHide={this.closeM}>
                     <Modal.Header closeButton>
