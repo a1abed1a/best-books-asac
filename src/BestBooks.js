@@ -4,6 +4,8 @@ import { withAuth0 } from '@auth0/auth0-react';
 import { Jumbotron, Card, CardGroup, Button } from 'react-bootstrap';
 import './BestBooks.css';
 import BookForm from './components/BookForm'
+import EditBook from './components/EditBook'
+
 const axios = require('axios');
 
 
@@ -25,21 +27,16 @@ class MyFavoriteBooks extends React.Component {
     })
   }
 
-  addBook = async (bookInfo) =>{
-    let temBook = await axios.post(`${process.env.REACT_APP_API_LINK}/addBook`,bookInfo).then(re => {
-      console.log(re)
-    }).catch(error => {
-      console.log(error)
-    })
-    this.setState ({
+  addBook = async (bookInfo) => {
+    let temBook = await axios.post(`${process.env.REACT_APP_API_LINK}/addBook`, bookInfo)
+    this.setState({
       data: temBook.data
     })
   }
 
-  remove = async(id) =>{
+  remove = async (id) => {
     let temBook = await axios.delete(`${process.env.REACT_APP_API_LINK}/deleteBook?bookID=${id}&email=${this.state.user.email}`)
-    
-    this.setState ({
+    this.setState({
       data: temBook.data
     })
   }
@@ -48,12 +45,12 @@ class MyFavoriteBooks extends React.Component {
     this.getData()
     return (
       <Jumbotron>
-        <h1 style={{textAlign:'center'}}>My Favorite Books</h1>
-        <p style={{textAlign:'center'}}>
+        <h1 style={{ textAlign: 'center' }}>My Favorite Books</h1>
+        <p style={{ textAlign: 'center' }}>
           This is a collection of my favorite books
         </p>
-        <hr/>
-        <BookForm add={this.addBook}/>
+        <hr />
+        <BookForm add={this.addBook} />
         <CardGroup>
           {
             this.state.data.map((ele, idx) => {
@@ -65,13 +62,16 @@ class MyFavoriteBooks extends React.Component {
                     <Card.Text>
                       {ele.description}
                     </Card.Text>
-                    <Button variant="outline-danger" onClick={() => {this.remove(ele._id)} }>Remove</Button>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <EditBook data={ele} />
+                    <Button variant="outline-danger" onClick={() => { this.remove(ele._id) }} style={{ float: 'right', margin: '0px' }}>Remove</Button>
+                    </div>
                   </Card.Body>
                 </Card>
               );
             })
           }
-          </CardGroup>
+        </CardGroup>
       </Jumbotron>
     )
   }
